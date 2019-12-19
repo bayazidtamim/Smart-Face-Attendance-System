@@ -61,6 +61,45 @@ namespace WindowsFormsApp5
                 MessageBox.Show(Ex.Message);
             }
         }   
- 
+     
+     public void facedetect()
+        {
+            try
+            {
+
+                string facepath = Path.GetFullPath(@"../../haarcascade_frontalface_default.xml");
+                string eyeepath = Path.GetFullPath(@"../../haarcascade_eye.xml");
+
+
+                CascadeClassifier classifierFace = new CascadeClassifier(facepath);
+                CascadeClassifier classifiereye = new CascadeClassifier(eyeepath);
+
+                var imGray = imageinput.Convert<Bgr, byte>().Clone();
+                Rectangle[] faces = classifierFace.DetectMultiScale(imGray, 1.1, 4);
+                foreach (var face in faces)
+                {
+                    imageinput.Draw(face, new Bgr(0, 0, 225), 2);
+                    imGray.ROI = face;
+                    Rectangle[] eyes = classifiereye.DetectMultiScale(imGray, 1.1, 4);
+                    
+                    foreach(var eye in eyes)
+                    {
+                        var e = eye;
+                        e.X += face.X;
+                        e.Y += face.Y;
+                        
+                        imageinput.Draw(e, new Bgr(0, 255, 0), 2);
+                    }
+
+                }
+                pictureBox1.Image = imageinput.Bitmap;
+
+
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
     }
 }
