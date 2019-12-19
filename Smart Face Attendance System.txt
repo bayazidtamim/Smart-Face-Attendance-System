@@ -46,7 +46,21 @@ namespace WindowsFormsApp5
                 MessageBox.Show(Ex.Message);
             }
         }
-        
+     private void detectfaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (imageinput == null)
+                {
+                    throw new Exception("Please select and image");
+                }
+                facedetect();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }   
  
     }
 }
