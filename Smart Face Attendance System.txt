@@ -23,7 +23,29 @@ namespace WindowsFormsApp5
         {
             InitializeComponent();
         }
+    
+    private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    imageinput = new Image<Bgr, byte>(dialog.FileName);
+                    pictureBox1.Image = imageinput.Bitmap;
+                }
 
+                else
+                {
+                    throw new Exception("PLEASE SELECTED new file selected");
+                }
+
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+        }
         
  
     }
